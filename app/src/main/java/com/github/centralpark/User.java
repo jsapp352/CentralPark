@@ -5,7 +5,7 @@ package com.github.centralpark;
 
 import java.util.ArrayList;
 
-public class User
+class User
 {
     private static final int NUMBER_OF_GARAGES = 7;
 

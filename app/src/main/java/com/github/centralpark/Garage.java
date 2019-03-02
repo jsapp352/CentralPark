@@ -7,7 +7,7 @@ package com.github.centralpark;
 // Simple Garage Object that stores data about UCF Garages.
 // ----------------------
 
-public class Garage
+class Garage
 {
     String name;
     int available;
