@@ -4,10 +4,10 @@ class GarageFinder
 {
     JSONObject buildings;
 
-    public static void main(String [] args)
+    public static void findGarages(String [] args)
     {
         String garageDataURL = "http://secure.parking.ucf.edu/GarageCount/";
-        String API_key_filename = "googlemap_key.txt";
+//        String API_key_filename = "googlemap_key.txt";
         String building_data_filename = "building_data.json";
 
         try
@@ -19,18 +19,18 @@ class GarageFinder
             System.out.println("Could not webscrape UCF Parking Data!");
         }
 
-        File f = new File(API_key_filename);
-
-        try
-        {
-            Scanner key_scan = new Scanner(f);
-            String API_key = key_scan.next();
-            System.out.println(API_key);
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.println("Could not open API key file.");
-        }
+//        File f = new File(API_key_filename);
+//
+//        try
+//        {
+//            Scanner key_scan = new Scanner(f);
+//            String API_key = key_scan.next();
+//            System.out.println(API_key);
+//        }
+//        catch (FileNotFoundException e)
+//        {
+//            System.out.println("Could not open API key file.");
+//        }
 
 
 
