@@ -1,23 +1,36 @@
 package com.github.centralpark;
 
+import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+
 class GarageFinder
 {
-    JSONObject buildings;
+    static JSONObject buildings;
 
-    public static void findGarages(String [] args)
+    public static void findGarages(Context context)
     {
         String garageDataURL = "http://secure.parking.ucf.edu/GarageCount/";
 //        String API_key_filename = "googlemap_key.txt";
         String building_data_filename = "building_data.json";
 
-        try
-        {
-            ArrayList<Garage> garageList = populateGarageData(garageDataURL);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Could not webscrape UCF Parking Data!");
-        }
+        populateBuildingData(context, building_data_filename);
+
+//        try
+//        {
+//            ArrayList<Garage> garageList = populateGarageData();
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println("Could not webscrape UCF Parking Data!");
+//        }
 
 //        File f = new File(API_key_filename);
 //
@@ -37,18 +50,38 @@ class GarageFinder
     }
 
     // Parse the building-data JSON file and store it as a member variable
-    private void populateBuildingData(String filename)
-    {
-        JSONPasrser parser = new JSONParser();
+    private static void populateBuildingData(Context context, String filename) {
+        String json = null;
+        try {
+            InputStream in = context.getAssets().open("building_data.json");
+            int size = in.available();
+            byte[] buffer = new byte[size];
+            in.read(buffer);
+            in.close();
+            json = new String(buffer, "UTF-8");
+        } catch (Exception e) {
 
+        }
+
+        try {
+            buildings = new JSONObject(json);
+        } catch (Exception e) {
+
+        }
+    }
+
+    private static void getBuilding(String building_id)
+    {
         try
         {
-            buildings = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject building = buildings.getJSONObject(building_id);
+            Log.d("Building name",building.getString("name"));
         }
         catch (Exception e)
         {
-            System.out.println("Could not parse JSON object from file: " + filename + ".");
+            Log.d("JSON error", "Couldn't get building object.");
         }
+
     }
 
     // static ArrayList<int> readURL(String URLString) throws Exception
