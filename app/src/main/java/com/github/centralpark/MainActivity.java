@@ -11,7 +11,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GarageFinder.findGarages(this);
-//        JSONObject hec_building = GarageFinder.getBuilding("116");
+        GarageFinder.findGarages(this, "116");
     }
 }

@@ -3,6 +3,7 @@ package com.github.centralpark;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,89 +14,69 @@ import java.util.ArrayList;
 
 class GarageFinder
 {
-    static JSONObject buildings;
+    private static JSONObject buildings;
+    private static ArrayList<Garage> garage_list;
 
-    public static void findGarages(Context context)
+    public static void findGarages(Context context, String buildingID)
     {
         String garageDataURL = "http://secure.parking.ucf.edu/GarageCount/";
-//        String API_key_filename = "googlemap_key.txt";
         String building_data_filename = "building_data.json";
 
-        populateBuildingData(context, building_data_filename);
+        // Create a JSON object containing building information and walking-duration times from
+        // each garage to each building
+        try
+        {
+            populateBuildingData(context, building_data_filename);
+        }
+        catch (Exception e)
+        {
+            Log.d("JSON error", "Couldn't import JSON data.");
+        }
 
-//        try
-//        {
-//            ArrayList<Garage> garageList = populateGarageData();
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println("Could not webscrape UCF Parking Data!");
-//        }
+        // Create a list of parking garages that contains current availability data for each garage
+        try
+        {
+            populateGarageData(garageDataURL);
+        }
+        catch (Exception e)
+        {
+            Log.d("Webscrape error","Could not webscrape UCF Parking Data!");
+        }
 
-//        File f = new File(API_key_filename);
-//
-//        try
-//        {
-//            Scanner key_scan = new Scanner(f);
-//            String API_key = key_scan.next();
-//            System.out.println(API_key);
-//        }
-//        catch (FileNotFoundException e)
-//        {
-//            System.out.println("Could not open API key file.");
-//        }
+        // Get the building and garage walking durations information from the JSON data
+        JSONObject destination = getBuilding(buildingID);
+        JSONArray destinationGarageList = getDestinationGarageList(destination);
 
 
 
     }
 
     // Parse the building-data JSON file and store it as a member variable
-    private static void populateBuildingData(Context context, String filename) {
-        String json = null;
-        try {
-            InputStream in = context.getAssets().open("building_data.json");
-            int size = in.available();
-            byte[] buffer = new byte[size];
-            in.read(buffer);
-            in.close();
-            json = new String(buffer, "UTF-8");
-        } catch (Exception e) {
-
-        }
-
-        try {
-            buildings = new JSONObject(json);
-        } catch (Exception e) {
-
-        }
-    }
-
-    private static void getBuilding(String building_id)
+    private static void populateBuildingData(Context context, String filename) throws Exception
     {
-        try
-        {
-            JSONObject building = buildings.getJSONObject(building_id);
-            Log.d("Building name",building.getString("name"));
-        }
-        catch (Exception e)
-        {
-            Log.d("JSON error", "Couldn't get building object.");
-        }
+        String jsonString = null;
 
+        InputStream in = context.getAssets().open("building_data.json");
+        int size = in.available();
+        byte[] buffer = new byte[size];
+        in.read(buffer);
+        in.close();
+        jsonString = new String(buffer, "UTF-8");
+
+        buildings = new JSONObject(jsonString);
     }
 
-    // static ArrayList<int> readURL(String URLString) throws Exception
-    // {
-    //   URL garageDataUrl = new URL(URLString);
-    //   URLConnection garageData = garageDataUrl.openConnection();
-    //   BufferedReader in = new BufferedReader(new InputStreamReader(garageData.getInputStream()));
-    //   String inputLine;
-    //   while ((inputLine = in.readLine()) != null)
-    //       System.out.println(inputLine);
-    //   in.close();
-    // }
+    static JSONObject getBuilding(String buildingID)
+    {
+        return buildings.optJSONObject(buildingID);
+    }
 
-    private static ArrayList<Garage> populateGarageData(String address) throws Exception
+    static JSONArray getDestinationGarageList(JSONObject building)
+    {
+        return building.optJSONArray("garage_walk_durations");
+    }
+
+    private static void populateGarageData(String address) throws Exception
     {
         ArrayList<Garage> garages = new ArrayList<>();
         String inputLine;
@@ -124,7 +105,7 @@ class GarageFinder
                 int endIndex = inputLine.indexOf(end);
                 name = inputLine.substring(startIndex, endIndex);
             }
-            else if (inputLine.contains("<strong>") == true)
+            else if (inputLine.contains("<strong>"))
             {
                 // Get available capacity from UCF website
                 String start = "<strong>";
@@ -143,7 +124,7 @@ class GarageFinder
             }
         }
 
-        return garages;
+        garage_list = garages;
     }
 }
 
