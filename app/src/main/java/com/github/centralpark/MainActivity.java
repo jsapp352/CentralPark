@@ -4,27 +4,19 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-<<<<<<< HEAD
 import android.view.View;
-=======
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
->>>>>>> 15e3e6367227810e74caab8ba046b5b81cb31be3
 import android.widget.TextView;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity implements OnClickListener {
-=======
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
->>>>>>> 15e3e6367227810e74caab8ba046b5b81cb31be3
+public class MainActivity extends AppCompatActivity implements OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
