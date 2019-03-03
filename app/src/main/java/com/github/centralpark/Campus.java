@@ -11,12 +11,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 
 class Campus
 {
     private static JSONObject buildings;
     private static HashMap<String, Garage> garage_hashmap;
-    static String destinationName;
 
     // Parse the building-data JSON file and store it as a member variable
     static void populateBuildingData(Context context, String filename) throws Exception
@@ -101,8 +101,18 @@ class Campus
         garage_hashmap = garages;
     }
 
-//    String [] getBuildingNameArray()
-//    {
-//
-//    }
+    static HashMap<String, String> getBuildingIDMap()
+    {
+        HashMap<String, String> map = new HashMap<>();
+        Iterator<String> keyIterator = buildings.keys();
+
+        while (keyIterator.hasNext())
+        {
+            JSONObject building = buildings.optJSONObject(keyIterator.next());
+            map.put(building.optString("name"), building.optString("id"));
+        }
+
+        return map;
+
+    }
 }
