@@ -10,14 +10,14 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 class GarageFinder
 {
     private static JSONObject buildings;
-    private static ArrayList<Garage> garage_list;
+    private static HashMap<String, Garage> garage_hashmap;
 
-    public static void findGarages(Context context, String buildingID)
+    public static Garage findGarages(Context context, String buildingID)
     {
         String garageDataURL = "http://secure.parking.ucf.edu/GarageCount/";
         String building_data_filename = "building_data.json";
@@ -40,15 +40,45 @@ class GarageFinder
         }
         catch (Exception e)
         {
-            Log.d("Webscrape error","Could not webscrape UCF Parking Data!");
+            Log.d("Webscrape error","Could not webscrape UCF Parking Data!", e);
         }
 
         // Get the building and garage walking durations information from the JSON data
         JSONObject destination = getBuilding(buildingID);
+
+
+
         JSONArray destinationGarageList = getDestinationGarageList(destination);
 
+        if (destinationGarageList == null)
+            return null;
 
+        return findClosestAvailableGarage(destinationGarageList);
+    }
 
+    static Garage findClosestAvailableGarage(JSONArray array)
+    {
+        int length = array.length();
+
+        for (int i = 0; i < length; i++)
+        {
+            String garage_name = array.optJSONObject(i).optString("name");
+
+            Log.d("Debug", "Checking garage: " + garage_name);
+
+            Garage garage = garage_hashmap.get("Garage "+garage_name);
+
+            if (garage == null)
+                Log.d("Debug", "garage_hashmap is null....");
+
+            if (garage.hasAvailableSpaces())
+            {
+                garage.setWalkingDuration(array.optJSONObject(i).optInt("walk_duration"));
+                return garage;
+            }
+        }
+
+        return null;
     }
 
     // Parse the building-data JSON file and store it as a member variable
@@ -78,7 +108,7 @@ class GarageFinder
 
     private static void populateGarageData(String address) throws Exception
     {
-        ArrayList<Garage> garages = new ArrayList<>();
+        HashMap<String, Garage> garages = new HashMap<>();
         String inputLine;
         String name = "Garage Something";
         URL url = new URL(address);
@@ -99,7 +129,7 @@ class GarageFinder
             else if (inputLine.contains("<td class=\"dxgv\" style=\"border-bottom-width:0px;\">"))
             {
                 // Get garage name from UCF website
-                String start = "<td class=\"dxgv\" style=\"border-bottom-width:0px;\">";
+                String start = "<td class=\"dxgv\" style=\"border-bottom-width:0px;\"> Garage ";
                 String end = "</td>";
                 int startIndex = inputLine.indexOf(start) + start.length();
                 int endIndex = inputLine.indexOf(end);
@@ -120,11 +150,13 @@ class GarageFinder
                 int capacity = Integer.parseInt(inputLine.substring(startIndex));
 
                 // Add to the list of garages
-                garages.add(new Garage(name, available, capacity));
+                garages.put(name, new Garage(name, available, capacity));
+
+                Log.d("debug", "garage name  --"+name+"--");
             }
         }
 
-        garage_list = garages;
+        garage_hashmap = garages;
     }
 }
 
