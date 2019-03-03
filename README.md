@@ -1,5 +1,5 @@
 # CentralPark
-Use real time availability and walking-distance data to find the best place to park at UCF.
+Use walking-distance data and real time availability to find the best place to park at UCF.
 
 - The app currently does not validate user input, but **it is important to only search for destinations that are included in the autocomplete list.** We plan to validate input in the future, and otherwise the code is ready to test :)
 
