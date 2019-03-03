@@ -4,7 +4,12 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.View;
+=======
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+>>>>>>> 15e3e6367227810e74caab8ba046b5b81cb31be3
 import android.widget.TextView;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -12,7 +17,14 @@ import android.view.View.OnClickListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+<<<<<<< HEAD
 public class MainActivity extends AppCompatActivity implements OnClickListener {
+=======
+import java.util.Arrays;
+import java.util.HashMap;
+
+public class MainActivity extends AppCompatActivity {
+>>>>>>> 15e3e6367227810e74caab8ba046b5b81cb31be3
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +69,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         {
             Log.d("Webscrape error","Could not webscrape UCF Parking Data!", e);
         }
+
+        HashMap<String, String> buildingIDMap = Campus.getBuildingIDMap();
+        Object [] buildingNameObjects = buildingIDMap.keySet().toArray();
+        String [] buildingNames = Arrays.copyOf(buildingNameObjects,
+                buildingNameObjects.length, String[].class);
+
+        // Code adapted from: https://www.journaldev.com/9574/android-autocompletetextview-example-tutorial
+        //Creating the instance of ArrayAdapter containing list of fruit names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.select_dialog_item, buildingNames);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView actv = (AutoCompleteTextView) findViewById(R.id.destinatioinInput);
+        actv.setThreshold(1);//will start working from first character
+        actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
 
         // Get the building and garage walking durations information from the JSON data
         JSONObject destination = Campus.getBuilding("116");
