@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         // Allow HTTP request for webscrape
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        final TextView resultTextView = (TextView) findViewById(R.id.Result);
 
         String garageDataURL = "http://secure.parking.ucf.edu/GarageCount/";
         String building_data_filename = "building_data.json";
@@ -78,5 +80,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Output", "Garage " + garage.name);
         Log.d("Output", minutes + "m " + seconds + "s walking time");
         Log.d("Output", garage.available + " out of " + garage.total + " spaces available.");
+
+        resultTextView.setText("Destination: " + destinationName +
+                               "\nGarage " + garage.name +
+                               "\n" + minutes + "m " + seconds + "s walking time\n" +
+                               garage.available + " out of " + garage.total + " spaces available.");
     }
 }
