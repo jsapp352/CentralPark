@@ -16,6 +16,7 @@ class GarageFinder
 {
     private static JSONObject buildings;
     private static HashMap<String, Garage> garage_hashmap;
+    static String destinationName;
 
     public static Garage findGarages(Context context, String buildingID)
     {
@@ -46,6 +47,8 @@ class GarageFinder
         // Get the building and garage walking durations information from the JSON data
         JSONObject destination = getBuilding(buildingID);
 
+        destinationName = destination.optString("name");
+
 
 
         JSONArray destinationGarageList = getDestinationGarageList(destination);
@@ -66,7 +69,7 @@ class GarageFinder
 
             Log.d("Debug", "Checking garage: " + garage_name);
 
-            Garage garage = garage_hashmap.get("Garage "+garage_name);
+            Garage garage = garage_hashmap.get(garage_name);
 
             if (garage == null)
                 Log.d("Debug", "garage_hashmap is null....");
@@ -117,19 +120,19 @@ class GarageFinder
         while ((inputLine = reader.readLine()) != null)
         {
 
-            if (inputLine.contains("<td class=\"dxgv\">"))
+            if (inputLine.contains("<td class=\"dxgv\">Garage "))
             {
-                // Get available capacity from UCF website
-                String start = "<td class=\"dxgv\">";
+                // Get garage name from UCF website
+                String start = "<td class=\"dxgv\">Garage ";
                 String end = "</td>";
                 int startIndex = inputLine.indexOf(start) + start.length();
                 int endIndex = inputLine.indexOf(end);
                 name = inputLine.substring(startIndex, endIndex);
             }
-            else if (inputLine.contains("<td class=\"dxgv\" style=\"border-bottom-width:0px;\">"))
+            else if (inputLine.contains("<td class=\"dxgv\" style=\"border-bottom-width:0px;\">Garage "))
             {
                 // Get garage name from UCF website
-                String start = "<td class=\"dxgv\" style=\"border-bottom-width:0px;\"> Garage ";
+                String start = "<td class=\"dxgv\" style=\"border-bottom-width:0px;\">Garage ";
                 String end = "</td>";
                 int startIndex = inputLine.indexOf(start) + start.length();
                 int endIndex = inputLine.indexOf(end);

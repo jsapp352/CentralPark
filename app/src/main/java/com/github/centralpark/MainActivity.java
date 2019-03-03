@@ -17,9 +17,14 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Garage closestGarage = GarageFinder.findGarages(this, "116");
+        Garage garage = GarageFinder.findGarages(this, "116");
 
-        Log.d("Output", "Garage " + closestGarage.name);
-        Log.d("output", closestGarage.walkingDuration + " seconds walking time");
+        int minutes = garage.walkingDuration / 60;
+        int seconds = garage.walkingDuration % 60;
+
+        Log.d("Output", "Destination: " + GarageFinder.destinationName);
+        Log.d("Output", "Garage " + garage.name);
+        Log.d("Output", minutes + "m " + seconds + "s walking time");
+        Log.d("Output", garage.available + " out of " + garage.total + " spaces available.");
     }
 }
