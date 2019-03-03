@@ -16,8 +16,8 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener{
-
+public class MainActivity extends AppCompatActivity implements OnClickListener
+{
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         setContentView(R.layout.home);
         Button optionButton = (Button)findViewById(R.id.optionButton);
         optionButton.setOnClickListener(this);
-        Button homeButton = (Button)findViewById(R.id.home);
-        homeButton.setOnClickListener(this);
-        final TextView resultTextView = (TextView) findViewById(R.id.Result);
+        Button runButton = (Button)findViewById(R.id.run);
+        runButton.setOnClickListener(this);
 
+        final TextView resultTextView = (TextView) findViewById(R.id.Result);
         // Allow HTTP request for webscrape
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -109,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         homeButton.setOnClickListener(this);
     }
 
+    protected void runGarageFinder()
+    {
+
+    }
+
     @Override
     public void onClick(View v)
     {
@@ -120,6 +125,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             case R.id.optionButton:
                 optionScreen();
                 break;
+            case R.id.run:
+                runGarageFinder();
+                break;
         }
     }
+
+
 }
