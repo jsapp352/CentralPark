@@ -81,4 +81,9 @@ class Garage
     {
         return walkingDuration + drivingDuration;
     }
+
+    public boolean hasAvailableSpaces()
+    {
+        return available < total;
+    }
 }
