@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Output", minutes + "m " + seconds + "s walking time");
         Log.d("Output", garage.available + " out of " + garage.total + " spaces available.");
 
-        resultTextView.setText("Destination: " + GarageFinder.destinationName +
+        resultTextView.setText("Destination: " + destinationName +
                                "\nGarage " + garage.name +
                                "\n" + minutes + "m " + seconds + "s walking time\n" +
                                garage.available + " out of " + garage.total + " spaces available.");
