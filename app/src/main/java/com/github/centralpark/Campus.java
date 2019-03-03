@@ -109,7 +109,8 @@ class Campus
         while (keyIterator.hasNext())
         {
             JSONObject building = buildings.optJSONObject(keyIterator.next());
-            map.put(building.optString("name"), building.optString("id"));
+            map.put((building.optString("name")+" ( " + building.optString("abbr") + " )"),
+                    building.optString("id"));
         }
 
         return map;
