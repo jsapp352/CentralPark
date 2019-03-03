@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         // Allow HTTP request for webscrape
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        final TextView resultTextView = (TextView) findViewById(R.id.Result);
 
         Garage garage = GarageFinder.findGarages(this, "116");
 
@@ -26,5 +28,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Output", "Garage " + garage.name);
         Log.d("Output", minutes + "m " + seconds + "s walking time");
         Log.d("Output", garage.available + " out of " + garage.total + " spaces available.");
+
+        resultTextView.setText("Destination: " + GarageFinder.destinationName +
+                               "\nGarage " + garage.name +
+                               "\n" + minutes + "m " + seconds + "s walking time\n" +
+                               garage.available + " out of " + garage.total + " spaces available.");
     }
 }
