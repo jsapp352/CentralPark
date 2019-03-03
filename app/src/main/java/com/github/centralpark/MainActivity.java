@@ -101,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // Get the building and garage walking durations information from the JSON data
         JSONObject destination = Campus.getBuilding(buildingID);
 
+        // Validate user input -- make sure a valid building/destination was entered
+        if (destination == null)
+        {
+            resultTextView.setText("Can't find your destination. Please enter a destination that " +
+                    "is included in the autocomplete-options list.");
+            return;
+        }
+
         String destinationName = destination.optString("name");
 
         JSONArray destinationGarageList = Campus.getDestinationGarageList(destination);
@@ -127,9 +135,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             case R.id.optionButton:
                 optionScreen();
                 break;
-//            case R.id.run:
-//                runGarageFinder();
-//                break;
         }
     }
 
