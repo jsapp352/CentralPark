@@ -15,6 +15,8 @@ class Garage
     int walkingDuration;
     int drivingDuration;
 
+    static int minimumAvailableSpaces = 50;
+
     Garage(String name)
     {
         this.name = name;
@@ -23,7 +25,7 @@ class Garage
     Garage(String name, int available, int total)
     {
         this.name = name;
-        this.available = available;
+        this.available = available < total ? available : total;
         this.total = total;
     }
 
@@ -84,6 +86,6 @@ class Garage
 
     public boolean hasAvailableSpaces()
     {
-        return available < total;
+        return available > minimumAvailableSpaces;
     }
 }

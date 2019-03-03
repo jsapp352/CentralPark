@@ -49,6 +49,7 @@
         android:layout_marginLeft="125dp"
         android:layout_marginTop="50dp"
         android:text="Garage A    "
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputTitle1" />
 
@@ -60,6 +61,7 @@
         android:layout_marginLeft="125dp"
         android:layout_marginTop="8dp"
         android:text="Garage B    "
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectA" />
 
@@ -71,6 +73,7 @@
         android:layout_marginLeft="125dp"
         android:layout_marginTop="8dp"
         android:text="Garage C    "
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectB" />
 
@@ -82,6 +85,7 @@
         android:layout_marginLeft="125dp"
         android:layout_marginTop="8dp"
         android:text="Garage D    "
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectC" />
 
@@ -93,6 +97,7 @@
         android:layout_marginLeft="125dp"
         android:layout_marginTop="8dp"
         android:text="Garage H    "
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectD" />
 
@@ -104,6 +109,7 @@
         android:layout_marginLeft="125dp"
         android:layout_marginTop="8dp"
         android:text="Garage I     "
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectH" />
 

@@ -29,7 +29,7 @@
         android:layout_marginRight="99dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Student Union"
+        android:hint="Student Union"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputTitle1" />
