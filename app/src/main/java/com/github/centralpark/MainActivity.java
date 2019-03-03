@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         actv.setThreshold(1);//will start working from first character
         actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
 
+
+
         // Get the building and garage walking durations information from the JSON data
         JSONObject destination = Campus.getBuilding("116");
 
