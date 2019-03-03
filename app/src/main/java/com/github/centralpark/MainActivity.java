@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         Button optionButton = (Button)findViewById(R.id.optionButton);
         optionButton.setOnClickListener(this);
         Button homeButton = (Button)findViewById(R.id.home);
-        optionButton.setOnClickListener(this);
+        homeButton.setOnClickListener(this);
         final TextView resultTextView = (TextView) findViewById(R.id.Result);
 
         // Allow HTTP request for webscrape
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         Button optionButton = (Button)findViewById(R.id.optionButton);
         optionButton.setOnClickListener(this);
         Button homeButton = (Button)findViewById(R.id.home);
-        optionButton.setOnClickListener(this);
+        homeButton.setOnClickListener(this);
     }
 
     @Override
